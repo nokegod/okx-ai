@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKX Chain Exclusive AI Assistant - On-chain Data Analysis Expert</title>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .hero-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            color: white;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .api-demo {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .btn-okx {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .btn-okx:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+            color: white;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-online { background-color: #28a745; }
+        .status-offline { background-color: #dc3545; }
+        .chain-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                                 <a class="navbar-brand" href="#">
+                     <i class="fas fa-robot me-2"></i>
+                     <strong>XLayer Network AI Assistant</strong>
+                 </a>
+                 <div class="navbar-nav ms-auto">
+                     <span class="navbar-text">
+                         <span class="status-indicator status-online"></span>
+                         XLayer (Chain ID: 196)
+                     </span>
+                 </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container">
+                         <!-- Hero Section -->
+             <div class="hero-section text-center">
+                 <h1 class="display-4 mb-4">
+                     <i class="fas fa-brain me-3"></i>
+                     XLayer Network AI Assistant
+                 </h1>
+                 <p class="lead mb-4">
+                     Chat with AI, intelligently identify token analysis needs, automatically generate professional narrative analysis, supports Chinese-English switching
+                 </p>
+                 <div class="row justify-content-center">
+                     <div class="col-md-8">
+                         <div class="input-group mb-3">
+                             <input type="text" id="chatInput" class="form-control form-control-lg" 
+                                    placeholder="Enter your question, e.g.: Analyze how good is this token 0x1234...?" 
+                                    onkeypress="if(event.keyCode===13) sendChat()" />
+                             <button class="btn btn-okx btn-lg" type="button" onclick="sendChat()">
+                                 <i class="fas fa-paper-plane me-2"></i>Send
+                             </button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+                         <!-- Feature Cards -->
+             <div class="row">
+                 <div class="col-md-4">
+                     <div class="feature-card text-center">
+                         <i class="fas fa-comments fa-3x text-primary mb-3"></i>
+                         <h4>Intelligent Dialogue</h4>
+                         <p>Natural conversation with AI, intelligently identify user intent, provide professional blockchain consulting services</p>
+                     </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="feature-card text-center">
+                         <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                         <h4>Automatic Token Analysis</h4>
+                         <p>Intelligently identify token analysis needs, automatically retrieve on-chain data and generate professional narrative analysis</p>
+                     </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="feature-card text-center">
+                         <i class="fas fa-language fa-3x text-info mb-3"></i>
+                         <h4>Chinese-English Switching</h4>
+                         <p>AI analysis results support Chinese-English switching, providing better localized user experience</p>
+                     </div>
+                 </div>
+             </div>
+
+                         <!-- AI Dialogue Demo Area -->
+             <div class="row mt-4">
+                 <div class="col-md-12">
+                     <div class="api-demo">
+                         <h5><i class="fas fa-robot me-2"></i>AI Dialogue Demo</h5>
+                         <div class="mb-3">
+                             <label class="form-label">Example Questions:</label>
+                             <div class="row">
+                                 <div class="col-md-4">
+                                     <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="setDemoQuestion('Analyze how good is this token 0x1518ee88b035cebd9073afa36d5452abd89f9f8d?')">
+                                         Token Analysis Example
+                                     </button>
+                                 </div>
+                                 <div class="col-md-4">
+                                     <button class="btn btn-outline-success btn-sm w-100 mb-2" onclick="setDemoQuestion('What is the RPC address of XLayer network?')">
+                                         Network Information Example
+                                     </button>
+                                 </div>
+                                 <div class="col-md-4">
+                                     <button class="btn btn-outline-info btn-sm w-100 mb-2" onclick="setDemoQuestion('What is DeFi?')">
+                                         Concept Explanation Example
+                                     </button>
+                                 </div>
+                             </div>
+                             <input type="text" id="demoQuestion" class="form-control" 
+                                    placeholder="Enter your question..." value="Analyze how good is this token 0x1518ee88b035cebd9073afa36d5452abd89f9f8d?" />
+                         </div>
+                         <button class="btn btn-success" onclick="demoChat()">
+                             <i class="fas fa-comments me-2"></i>AI Answer
+                         </button>
+                         <div id="chatResult" class="result-box mt-3" style="display: none;"></div>
+                     </div>
+                 </div>
+             </div>
+
+            <!-- On-chain Status -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="chain-info">
+                                                 <h5><i class="fas fa-network-wired me-2"></i>XLayer Network Real-time Status</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Network:</strong> <span id="networkName">XLayer</span>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Network Status:</strong> <span id="networkStatus">Normal</span>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Last Update:</strong> <span id="lastUpdate">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">AI is analyzing, please wait...</p>
+            </div>
+
+            <!-- Analysis Result -->
+            <div id="analysisResult" class="result-box" style="display: none;">
+                <h5><i class="fas fa-chart-bar me-2"></i>AI Analysis Result</h5>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script>
+        // Global variables
+        let currentAnalysis = null;
+        
+        // Initialize after page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateChainStats();
+            setInterval(updateChainStats, 30000); // Update every 30 seconds
+        });
+
+        // Update on-chain status
+        async function updateChainStats() {
+            try {
+                const response = await fetch('https://us-central1-chat-294cc.cloudfunctions.net/okxChainAI/api/realtime/chain-stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('networkName').textContent = data.data.network || 'XLayer';
+                    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+                }
+            } catch (error) {
+                console.error('Failed to update on-chain status:', error);
+            }
+        }
+
+        // Send chat message
+        async function sendChat() {
+            const message = document.getElementById('chatInput').value.trim();
+            
+            if (!message) {
+                alert('Please enter message content');
+                return;
+            }
+
+            try {
+                const response = await fetch('https://us-central1-chat-294cc.cloudfunctions.net/okxChainAI/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    if (result.data.type === 'token_analysis_result') {
+                        // Token analysis result
+                        currentAnalysis = result.data.analysisData;
+                        displayAnalysisResult(result.data.analysisData);
+                    } else {
+                        // Normal dialogue result
+                        displayChatResult(result.data.response);
+                    }
+                } else {
+                    throw new Error(result.error || 'Dialogue failed');
+                }
+            } catch (error) {
+                console.error('AI dialogue failed:', error);
+                alert('Dialogue failed: ' + error.message);
+            }
+        }
+
+        // Display analysis result
+        function displayAnalysisResult(data) {
+            const resultDiv = document.getElementById('resultContent');
+            
+            resultDiv.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-info-circle me-2"></i>Token Information</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Name:</strong> ${data.tokenData.name}</li>
+                            <li><strong>Symbol:</strong> ${data.tokenData.symbol}</li>
+                            <li><strong>Description:</strong> ${data.tokenData.description || 'No description'}</li>
+                            <li><strong>Contract Address:</strong> <code>${data.contractAddress}</code></li>
+                        </ul>
+                        <a href="${data.explorer}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-external-link-alt me-2"></i>View Block Explorer
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-link me-2"></i>Official Media</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Website:</strong> ${data.tokenData.website ? `<a href="${data.tokenData.website}" target="_blank">${data.tokenData.website}</a>` : 'No website'}</li>
+                            <li><strong>Telegram:</strong> ${data.tokenData.telegram ? `<a href="${data.tokenData.telegram}" target="_blank">${data.tokenData.telegram}</a>` : 'No Telegram'}</li>
+                            <li><strong>Twitter:</strong> ${data.tokenData.twitter ? `<a href="${data.tokenData.twitter}" target="_blank">${data.tokenData.twitter}</a>` : 'No Twitter'}</li>
+                            <li><strong>Network:</strong> ${data.chainData.network}</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <div class="mt-3">
+                    <h6><i class="fas fa-brain me-2"></i>AI Generated Token Narrative</h6>
+                    <div class="mb-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="translateNarrative()">
+                            <i class="fas fa-language me-2"></i>Translate to Chinese
+                        </button>
+                        <span class="ms-2 text-muted small">AI analysis results will be displayed in English, click button to translate to Chinese</span>
+                    </div>
+                    <div class="bg-light p-3 rounded">
+                        <div id="narrativeContent">
+                            ${data.narrative.replace(/\n/g, '<br>')}
+                        </div>
+                        <div id="translatedContent" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <!-- Removed: Generate Smart Contract and Generate NFT function buttons -->
+                    <button class="btn btn-info" onclick="getInvestmentAdvice()">
+                        <i class="fas fa-chart-pie me-2"></i>Investment Advice
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('analysisResult').style.display = 'block';
+        }
+
+        // Set demo question
+        function setDemoQuestion(question) {
+            document.getElementById('demoQuestion').value = question;
+            document.getElementById('chatInput').value = question;
+        }
+
+        // Display chat result
+        function displayChatResult(response) {
+            const resultDiv = document.getElementById('chatResult');
+            
+            resultDiv.innerHTML = `
+                <h6><i class="fas fa-robot me-2"></i>AI Answer:</h6>
+                <div class="bg-light p-3 rounded">
+                    ${response.replace(/\n/g, '<br>')}
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        // Demo AI dialogue
+        async function demoChat() {
+            const question = document.getElementById('demoQuestion').value;
+            
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+
+            try {
+                const response = await fetch('https://us-central1-chat-294cc.cloudfunctions.net/okxChainAI/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: question })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    if (result.data.type === 'token_analysis_result') {
+                        // Token analysis result
+                        currentAnalysis = result.data.analysisData;
+                        displayAnalysisResult(result.data.analysisData);
+                    } else {
+                        // Normal dialogue result
+                        displayChatResult(result.data.response);
+                    }
+                } else {
+                    throw new Error(result.error || 'Dialogue failed');
+                }
+            } catch (error) {
+                console.error('AI dialogue failed:', error);
+                alert('Dialogue failed: ' + error.message);
+            }
+        }
+
+        // Removed: Generate Smart Contract and Generate NFT frontend functions
+
+        // Get investment advice
+        async function getInvestmentAdvice() {
+            if (!currentAnalysis) {
+                alert('Please analyze a token first');
+                return;
+            }
+
+            try {
+                const response = await fetch('https://us-central1-chat-294cc.cloudfunctions.net/okxChainAI/api/investment/advice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        contractAddress: currentAnalysis.contractAddress,
+                        riskProfile: 'moderate'
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Investment advice generated successfully! Advice ID: ' + result.data.adviceId);
+                    // Here you can display investment advice
+                } else {
+                    throw new Error(result.error || 'Investment advice generation failed');
+                }
+            } catch (error) {
+                console.error('Investment advice generation failed:', error);
+                alert('Investment advice generation failed: ' + error.message);
+            }
+        }
+
+        // Show/hide loading indicator
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        // Hide result
+        function hideResult() {
+            document.getElementById('analysisResult').style.display = 'none';
+        }
+
+        // Translate AI narrative analysis (using frontend keyword replacement)
+        function translateNarrative() {
+            const narrativeContent = document.getElementById('narrativeContent');
+            const translatedContent = document.getElementById('translatedContent');
+            const translateBtn = document.querySelector('button[onclick="translateNarrative()"]');
+            
+            // Get English content
+            const englishText = narrativeContent.textContent || narrativeContent.innerText;
+            
+            if (!englishText) {
+                alert('No content to translate');
+                return;
+            }
+
+            // Show loading state
+            translateBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Translating...';
+            translateBtn.disabled = true;
+
+            try {
+                // Use frontend keyword replacement for translation
+                let translatedText = englishText;
+                
+                // Common vocabulary translation (extended version)
+                const translations = {
+                    // Titles and main structure
+                    'Core Token Narrative Analysis': 'Core Token Narrative Analysis',
+                    'Brand Positioning and Market Strategy': 'Brand Positioning and Market Strategy',
+                    'Community Ecosystem Analysis': 'Community Ecosystem Analysis',
+                    'Business Value Assessment': 'Business Value Assessment',
+                    'Objective Risk Warnings': 'Objective Risk Warnings',
+                    
+                    // Opening and introduction
+                    'Based on the provided information': 'Based on the provided information',
+                    'here is an analysis': 'here is an analysis',
+                    'here\'s an analysis': 'here is an analysis',
+                    'analysis of the': 'analysis of the',
+                    
+                    // Token basic information
+                    'token name and symbol': 'token name and symbol',
+                    'token name': 'token name',
+                    'token symbol': 'token symbol',
+                    'without a description': 'without a description',
+                    'difficult to determine': 'difficult to determine',
+                    'real meaning': 'real meaning',
+                    'story behind': 'story behind',
+                    'narrative type': 'narrative type',
+                    
+                    // Token types
+                    'meme culture': 'meme culture',
+                    'DeFi tool': 'DeFi tool',
+                    'gaming token': 'gaming token',
+                    'community token': 'community token',
+                    'business logic': 'business logic',
+                    'cultural value': 'cultural value',
+                    
+                    // User groups
+                    'target user group': 'target user group',
+                    'meme enthusiasts': 'meme enthusiasts',
+                    'DeFi users': 'DeFi users',
+                    'gamers': 'gamers',
+                    'investors': 'investors',
+                    'traders': 'traders',
+                    
+                    // Strategies and features
+                    'differentiating features': 'differentiating features',
+                    'marketing strategy': 'marketing strategy',
+                    'community building': 'community building',
+                    'social media links': 'social media links',
+                    'community activity': 'community activity',
+                    'community construction': 'community construction',
+                    'operation strategy': 'operation strategy',
+                    'user interaction': 'user interaction',
+                    'long-term community value': 'long-term community value',
+                    
+                    // Business value
+                    'business application scenarios': 'business application scenarios',
+                    'economic model': 'economic model',
+                    'incentive mechanisms': 'incentive mechanisms',
+                    'value positioning': 'value positioning',
+                    'XLayer ecosystem': 'XLayer ecosystem',
+                    'OKX ecosystem': 'OKX ecosystem',
+                    
+                    // Risk assessment
+                    'project professionalism': 'project professionalism',
+                    'credibility': 'credibility',
+                    'missing information': 'missing information',
+                    'investment advice': 'investment advice',
+                    'risk warnings': 'risk warnings',
+                    'risk assessment': 'risk assessment',
+                    
+                    // Summary and recommendations
+                    'In summary': 'In summary',
+                    'In conclusion': 'In conclusion',
+                    'recommend': 'recommend',
+                    'seek': 'seek',
+                    'detailed information': 'detailed information',
+                    'purpose': 'purpose',
+                    'target audience': 'target audience',
+                    'unique features': 'unique features',
+                    'business applications': 'business applications',
+                    'tokenomics': 'tokenomics',
+                    'partnerships': 'partnerships',
+                    'collaborations': 'collaborations',
+                    'market conditions': 'market conditions',
+                    
+                    // Investment related
+                    'speculative': 'speculative',
+                    'investment decisions': 'investment decisions',
+                    'basis': 'basis',
+                    'challenging': 'challenging',
+                    'assess': 'assess',
+                    'potential value': 'potential value',
+                    'accurately': 'accurately',
+                    
+                    // Common verbs and adjectives
+                    'analyze': 'analyze',
+                    'evaluate': 'evaluate',
+                    'determine': 'determine',
+                    'identify': 'identify',
+                    'assess': 'assess',
+                    'provide': 'provide',
+                    'generate': 'generate',
+                    'create': 'create',
+                    'develop': 'develop',
+                    'build': 'build',
+                    'maintain': 'maintain',
+                    'support': 'support',
+                    'enhance': 'enhance',
+                    'improve': 'improve',
+                    'optimize': 'optimize',
+                    
+                    // Common nouns
+                    'information': 'information',
+                    'data': 'data',
+                    'details': 'details',
+                    'features': 'features',
+                    'benefits': 'benefits',
+                    'advantages': 'advantages',
+                    'disadvantages': 'disadvantages',
+                    'challenges': 'challenges',
+                    'opportunities': 'opportunities',
+                    'risks': 'risks',
+                    'rewards': 'rewards',
+                    'performance': 'performance',
+                    'efficiency': 'efficiency',
+                    'quality': 'quality',
+                    'reliability': 'reliability',
+                    
+                    // Network and blockchain terms
+                    'blockchain': 'blockchain',
+                    'network': 'network',
+                    'ecosystem': 'ecosystem',
+                    'platform': 'platform',
+                    'protocol': 'protocol',
+                    'smart contract': 'smart contract',
+                    'wallet': 'wallet',
+                    'transaction': 'transaction',
+                    'block': 'block',
+                    'mining': 'mining',
+                    'staking': 'staking',
+                    'liquidity': 'liquidity',
+                    'volatility': 'volatility',
+                    'market cap': 'market cap',
+                    'trading volume': 'trading volume'
+                };
+
+                // Execute translation
+                for (const [english, chinese] of Object.entries(translations)) {
+                    translatedText = translatedText.replace(new RegExp(english, 'gi'), chinese);
+                }
+
+                // Display Chinese translation
+                translatedContent.innerHTML = translatedText.replace(/\n/g, '<br>');
+                translatedContent.style.display = 'block';
+                narrativeContent.style.display = 'none';
+                
+                // Update button
+                translateBtn.innerHTML = '<i class="fas fa-eye me-2"></i>Show English';
+                translateBtn.onclick = toggleLanguage;
+                
+            } catch (error) {
+                console.error('Translation failed:', error);
+                alert('Translation failed: ' + error.message);
+                
+                // Restore button state
+                translateBtn.innerHTML = '<i class="fas fa-language me-2"></i>Translate to Chinese';
+                translateBtn.disabled = false;
+            }
+        }
+
+        // Toggle Chinese-English display
+        function toggleLanguage() {
+            const narrativeContent = document.getElementById('narrativeContent');
+            const translatedContent = document.getElementById('translatedContent');
+            const toggleBtn = document.querySelector('button[onclick="toggleLanguage()"]');
+            
+            if (translatedContent.style.display === 'none') {
+                // Show Chinese
+                translatedContent.style.display = 'block';
+                narrativeContent.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fas fa-eye me-2"></i>Show English';
+            } else {
+                // Show English
+                translatedContent.style.display = 'none';
+                narrativeContent.style.display = 'block';
+                toggleBtn.innerHTML = '<i class="fas fa-language me-2"></i>Translate to Chinese';
+                toggleBtn.onclick = translateNarrative;
+            }
+        }
+    </script>
+    
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js"></script>
+    
+    <script>
+        // Handle EVM wallet injection conflicts
+        window.addEventListener('load', function() {
+            // Prevent wallet extensions from overriding ethereum object
+            if (window.ethereum && !window.ethereum.isMetaMask) {
+                console.log('Wallet extension detected, but not MetaMask');
+            }
+            
+            // Clean up possible conflicts
+            if (window.evmAsk) {
+                console.log('evmAsk extension detected');
+            }
+        });
+        
+        // Initialize Firebase after page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Firebase initialized');
+            console.log('Firestore database:', db);
+            console.log('Realtime database:', rtdb);
+            
+            // Test Firebase connection
+            rtdb.ref('test').set({
+                message: 'Firebase connection test',
+                timestamp: Date.now()
+            }).then(() => {
+                console.log('Firebase Realtime Database connection successful');
+            }).catch((error) => {
+                console.error('Firebase connection failed:', error);
+            });
+        });
+    </script>
+</body>
+</html>

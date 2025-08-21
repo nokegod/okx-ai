@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKX Chain AI API Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        
+        .api-endpoint {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .method-badge {
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .method-badge.get { background: #17a2b8; }
+        .method-badge.post { background: #28a745; }
+        .method-badge.put { background: #ffc107; color: #212529; }
+        .method-badge.delete { background: #dc3545; }
+        
+        .response-example {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .pricing-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            border-color: #007bff;
+            transform: translateY(-5px);
+        }
+        
+        .pricing-card.featured {
+            border-color: #007bff;
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-robot"></i> OKX Chain AI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#overview">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#endpoints">API Endpoints</a>
+                    </li>
+                    <li class="nav-link">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#demo">Live Demo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">OKX Chain AI API</h1>
+            <p class="lead mb-4">Integrate powerful AI capabilities into your blockchain applications</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <span class="badge bg-light text-dark fs-6 p-2">
+                            <i class="fas fa-brain"></i> AI-Powered Analysis
+                        </span>
+                        <span class="badge bg-light text-dark fs-6 p-2">
+                            <i class="fas fa-chart-line"></i> Real-time Data
+                        </span>
+                        <span class="badge bg-light text-dark fs-6 p-2">
+                            <i class="fas fa-shield-alt"></i> Secure API
+                        </span>
+                        <span class="badge bg-light text-dark fs-6 p-2">
+                            <i class="fas fa-bolt"></i> Fast Response
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="mb-4">Why Choose OKX Chain AI?</h2>
+                    <p class="lead text-muted">Our API provides comprehensive blockchain intelligence powered by advanced AI technology</p>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-search fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Token Analysis</h5>
+                            <p class="card-text">Get AI-generated insights and risk assessments for any token contract</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-chart-bar fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Market Intelligence</h5>
+                            <p class="card-text">Real-time chain analysis and market trend predictions</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-comments fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">AI Chat</h5>
+                            <p class="card-text">Intelligent dialogue system for blockchain and crypto questions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Endpoints Section -->
+    <section id="endpoints" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">API Endpoints</h2>
+            
+            <!-- Token Analysis -->
+            <div class="api-endpoint">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4><i class="fas fa-search"></i> Token Analysis</h4>
+                    <span class="method-badge post">POST</span>
+                </div>
+                <p class="mb-2"><strong>Endpoint:</strong> <code>/api/token/analyze</code></p>
+                <p class="mb-3">Analyze any token contract address and get AI-generated insights</p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Request Example:</h6>
+                        <div class="code-block">
+{
+  "contractAddress": "0x1234567890abcdef..."
+}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Response Example:</h6>
+                        <div class="code-block">
+{
+  "success": true,
+  "analysisId": "analysis_123",
+  "narrative": "This token shows strong fundamentals...",
+  "riskAssessment": "Medium risk"
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chain Analysis -->
+            <div class="api-endpoint">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4><i class="fas fa-chart-line"></i> Chain Analysis</h4>
+                    <span class="method-badge post">POST</span>
+                </div>
+                <p class="mb-2"><strong>Endpoint:</strong> <code>/api/chain/analyze</code></p>
+                <p class="mb-3">Get comprehensive analysis of OKX Chain trends and market data</p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Request Example:</h6>
+                        <div class="code-block">
+{
+  "analysisType": "trend"
+}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Response Example:</h6>
+                        <div class="code-block">
+{
+  "success": true,
+  "chainData": {
+    "totalTransactions": 1500000,
+    "activeWallets": 45000
+  },
+  "trends": {
+    "marketSentiment": "bullish"
+  }
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Chat -->
+            <div class="api-endpoint">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4><i class="fas fa-comments"></i> AI Chat</h4>
+                    <span class="method-badge post">POST</span>
+                </div>
+                <p class="mb-2"><strong>Endpoint:</strong> <code>/api/chat</code></p>
+                <p class="mb-3">Intelligent dialogue system for blockchain and crypto questions</p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Request Example:</h6>
+                        <div class="code-block">
+{
+  "message": "What are the risks of this token?",
+  "context": "Token analysis context"
+}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Response Example:</h6>
+                        <div class="code-block">
+{
+  "success": true,
+  "response": "Based on my analysis...",
+  "suggestions": [
+    "Check liquidity",
+    "Verify contract security"
+  ]
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Pricing Plans</h2>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="pricing-card">
+                        <h4>Free</h4>
+                        <h2 class="text-primary">$0</h2>
+                        <p class="text-muted">per month</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> 100 requests/month</li>
+                            <li><i class="fas fa-check text-success"></i> Basic API access</li>
+                            <li><i class="fas fa-check text-success"></i> Community support</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100">Get Started</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="pricing-card">
+                        <h4>Basic</h4>
+                        <h2 class="text-primary">$9.99</h2>
+                        <p class="text-muted">per month</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> 1,000 requests/month</li>
+                            <li><i class="fas fa-check text-success"></i> All API endpoints</li>
+                            <li><i class="fas fa-check text-success"></i> 10% discount</li>
+                            <li><i class="fas fa-check text-success"></i> Email support</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Choose Plan</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="pricing-card featured">
+                        <h4>Pro</h4>
+                        <h2 class="text-primary">$49.99</h2>
+                        <p class="text-muted">per month</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> 10,000 requests/month</li>
+                            <li><i class="fas fa-check text-success"></i> Priority API access</li>
+                            <li><i class="fas fa-check text-success"></i> 30% discount</li>
+                            <li><i class="fas fa-check text-success"></i> Priority support</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Choose Plan</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="pricing-card">
+                        <h4>Enterprise</h4>
+                        <h2 class="text-primary">$199.99</h2>
+                        <p class="text-muted">per month</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Unlimited requests</li>
+                            <li><i class="fas fa-check text-success"></i> Custom integrations</li>
+                            <li><i class="fas fa-check text-success"></i> 50% discount</li>
+                            <li><i class="fas fa-check text-success"></i> Dedicated support</li>
+                        </ul>
+                        <button class="btn btn-primary w-100">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section id="demo" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Live API Demo</h2>
+            
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="test-section">
+                        <h5><i class="fas fa-key"></i> API Key Setup</h5>
+                        <div class="mb-3">
+                            <label for="apiKey" class="form-label">Your API Key:</label>
+                            <input type="text" class="form-control" id="apiKey" placeholder="Enter your API key (starts with okx_)">
+                        </div>
+                        <button class="btn btn-primary" onclick="testAPIKey()">
+                            <i class="fas fa-check"></i> Test API Key
+                        </button>
+                        <div id="apiKeyStatus" class="mt-2"></div>
+                    </div>
+
+                    <div class="test-section">
+                        <h5><i class="fas fa-search"></i> Token Analysis Test</h5>
+                        <div class="mb-3">
+                            <label for="contractAddress" class="form-label">Contract Address:</label>
+                            <input type="text" class="form-control" id="contractAddress" placeholder="0x1234567890abcdef...">
+                        </div>
+                        <button class="btn btn-success" onclick="testTokenAnalysis()">
+                            <i class="fas fa-play"></i> Analyze Token
+                        </button>
+                        <div id="tokenAnalysisResult" class="mt-3"></div>
+                    </div>
+
+                    <div class="test-section">
+                        <h5><i class="fas fa-comments"></i> AI Chat Test</h5>
+                        <div class="mb-3">
+                            <label for="chatMessage" class="form-label">Message:</label>
+                            <textarea class="form-control" id="chatMessage" rows="3" placeholder="Ask the AI about blockchain, tokens, or investment advice..."></textarea>
+                        </div>
+                        <button class="btn btn-info" onclick="testAIChat()">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                        <div id="chatResult" class="mt-3"></div>
+                    </div>
+
+                    <div class="test-section">
+                        <h5><i class="fas fa-chart-line"></i> Chain Analysis Test</h5>
+                        <button class="btn btn-warning" onclick="testChainAnalysis()">
+                            <i class="fas fa-chart-bar"></i> Analyze Chain
+                        </button>
+                        <div id="chainAnalysisResult" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 OKX Chain AI. All rights reserved.</p>
+            <p class="mb-0">
+                <a href="#" class="text-light me-3"><i class="fab fa-github"></i> GitHub</a>
+                <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#" class="text-light"><i class="fab fa-telegram"></i> Telegram</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="okx-ai-sdk.js"></script>
+    
+    <script>
+        let aiClient = null;
+        const BASE_URL = 'https://chat-294cc.cloudfunctions.net/okxChainAI';
+
+        function showResult(elementId, content, isSuccess = true) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `
+                <div class="alert alert-${isSuccess ? 'success' : 'danger'}">
+                    <pre class="mb-0">${JSON.stringify(content, null, 2)}</pre>
+                </div>
+            `;
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i> ${message}
+                </div>
+            `;
+        }
+
+        async function testAPIKey() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            if (!apiKey) {
+                showError('apiKeyStatus', 'Please enter an API key');
+                return;
+            }
+
+            try {
+                aiClient = new OKXChainAI(apiKey);
+                const response = await aiClient.checkHealth();
+                showResult('apiKeyStatus', response, true);
+            } catch (error) {
+                showError('apiKeyStatus', `API key test failed: ${error.message}`);
+            }
+        }
+
+        async function testTokenAnalysis() {
+            if (!aiClient) {
+                showError('tokenAnalysisResult', 'Please test your API key first');
+                return;
+            }
+
+            const contractAddress = document.getElementById('contractAddress').value.trim();
+            if (!contractAddress) {
+                showError('tokenAnalysisResult', 'Please enter a contract address');
+                return;
+            }
+
+            try {
+                const result = await aiClient.analyzeToken(contractAddress);
+                showResult('tokenAnalysisResult', result, true);
+            } catch (error) {
+                showError('tokenAnalysisResult', `Token analysis failed: ${error.message}`);
+            }
+        }
+
+        async function testAIChat() {
+            if (!aiClient) {
+                showError('chatResult', 'Please test your API key first');
+                return;
+            }
+
+            const message = document.getElementById('chatMessage').value.trim();
+            if (!message) {
+                showError('chatResult', 'Please enter a message');
+                return;
+            }
+
+            try {
+                const result = await aiClient.chat(message);
+                showResult('chatResult', result, true);
+            } catch (error) {
+                showError('chatResult', `AI chat failed: ${error.message}`);
+            }
+        }
+
+        async function testChainAnalysis() {
+            if (!aiClient) {
+                showError('chainAnalysisResult', 'Please test your API key first');
+                return;
+            }
+
+            try {
+                const result = await aiClient.analyzeChain();
+                showResult('chainAnalysisResult', result, true);
+            } catch (error) {
+                showError('chainAnalysisResult', `Chain analysis failed: ${error.message}`);
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

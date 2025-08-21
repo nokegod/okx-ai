@@ -1,0 +1,47 @@
+{
+  "name": "okx-chain-ai",
+  "version": "1.0.0",
+  "description": "OKX Chain Exclusive AI Assistant - On-chain Data Analysis, Smart Contract Generation, NFT Creation, etc.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "telegram": "node start-with-telegram.js",
+    "telegram:test": "node test-telegram-bot.js",
+    "smart:test": "node test-smart-features.js",
+    "openai:test": "node test-openai-key.js",
+    "deploy": "firebase deploy --only functions",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "chart.js": "^4.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.8.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.11.0",
+    "firebase-functions": "^6.4.0",
+    "node-cron": "^3.0.3",
+    "node-telegram-bot-api": "^0.64.0",
+    "openai": "^4.20.1",
+    "web3": "^4.2.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "keywords": [
+    "okx",
+    "blockchain",
+    "ai",
+    "nft",
+    "defi",
+    "smart-contracts"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

@@ -1,0 +1,47 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "token_analyses",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "contractAddress",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "timestamp",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "generated_contracts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "contractType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "generated_nfts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "tokenId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
