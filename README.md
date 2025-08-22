@@ -2,6 +2,10 @@
 
 An OKX Chain (OKC) exclusive AI assistant based on Firebase Cloud Functions and OpenAI, specifically designed to provide intelligent services for blockchain developers and users.
 
+X:https://x.com/okoxaibot?s=21 
+github：https://github.com/nokegod/okx-ai.git
+tg：@https://t.me/okxxAIbot 
+
 ## ✨ Core Features
 
 ### 1. 🎯 Token Narrative Generation AI
@@ -306,3 +310,4 @@ MIT License - See [LICENSE](LICENSE) file for details
 ---
 
 **Let AI become your OKX Chain development assistant!** 🚀✨
+
